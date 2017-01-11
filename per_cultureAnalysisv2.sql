@@ -43,3 +43,19 @@ left join cultureDate c on sm.encounter_id=c.encounter_id order by pi.identifier
 /* 85, 95
   185 195
   275 280 */
+  
+DROP temporary table Results;
+CREATE TEMPORARY TABLE IF NOT EXISTS Results (pi_indentifier varchar(250), ti_dates date, sc_dates date, sm_dates date, c_dates date, dateDiff int(11));
+INSERT INTO Results (pi_indentifier, ti_dates, sc_dates, sm_dates, c_dates, dateDiff)
+select pi.identifier, DATE(ti.dates) AS 'Treatment start date', DATE(sc.dates) AS 'Sample Collection Date', DATE(sm.dates) AS 'Date of smear',
+DATE(c.dates) AS 'Culture Innoculation Date', DATEDIFF(sm.dates, ti.dates) AS 'Interval in day(s)'
+from smearDate sm inner join patient_identifier pi on pi.patient_id=sm.person_id inner join treatmentStartDate ti on ti.person_id=pi.patient_id 
+inner join sampleCollectionDate sc on sm.encounter_id=sc.encounter_id
+left join cultureDate c on sm.encounter_id=c.encounter_id order by pi.identifier;
+
+Select * from Results;
+
+select * from Results where dateDiff BETWEEN 85 and 95;
+select * from Results where dateDiff BETWEEN 185 and 195;
+select * from Results where dateDiff BETWEEN 275 and 280;
+select * from Results where dateDiff BETWEEN 365 and 375;
