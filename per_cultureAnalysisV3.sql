@@ -84,5 +84,5 @@ FROM
     cultureDate c ON sc.encounter_id = c.encounter_id
 ORDER BY pi.identifier , sc.dates ASC;
 
-SELECT * from Results where c_dates IS NULL order by pi_indentifier, sc_dates ASC;
-
+-- SELECT * from Results where c_dates IS NULL order by pi_indentifier, sc_dates ASC;
+-- SELECT * from Results where c_dates IS NULL and dateDiff>=90 order by pi_indentifier, sc_dates ASC;
