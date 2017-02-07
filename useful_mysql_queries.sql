@@ -40,6 +40,6 @@ FROM
         orders
     WHERE
         concept_id = 1251 or concept_id=1252
-    GROUP BY patient_id) temp_orders;
+    GROUP BY patient_id) tempOrdersTable;
     
     
