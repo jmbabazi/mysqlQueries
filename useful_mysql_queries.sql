@@ -1,3 +1,21 @@
+/* including cummulative total */
+SELECT 
+    DATE_FORMAT(mycount, '%Y/%M') AS Date,
+    COUNT(mycount) AS 'Patients enrolled' #,
+    # @running_sum:=IF(@running_sum=COUNT(mycount),1, @running_sum)+COUNT(mycount) AS 'Cummulative enrollment'
+FROM
+    (SELECT 
+        MIN(date_activated) mycount
+    FROM
+        orders
+    WHERE
+        concept_id = 1251 OR concept_id = 1252
+    GROUP BY patient_id) temp_orders
+        JOIN
+    (SELECT @running_sum:=0 AS dummy) dummy
+GROUP BY MONTH(temp_orders.mycount)
+ORDER BY DATE_FORMAT(mycount, '%Y/%m') ASC;
+
 /* List patients and date they started taking BDQ, including patients with no active bdq drug*/
 SELECT 
     pi.identifier, MIN(o.date_activated)
