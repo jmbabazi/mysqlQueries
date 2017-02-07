@@ -29,5 +29,17 @@ FROM
 WHERE
     concept_id = 1251
 GROUP BY patient_id;
+
+/* Count patients who are/were either on BDQ or DLM */
+SELECT 
+    COUNT(mycount)
+FROM
+    (SELECT 
+        MIN(date_activated) mycount
+    FROM
+        orders
+    WHERE
+        concept_id = 1251 or concept_id=1252
+    GROUP BY patient_id) temp_orders;
     
     
