@@ -10,6 +10,8 @@ FROM
         AND o.voided = 0
 GROUP BY o.patient_id
 ORDER BY pi.identifier ASC;
+
+
 #DLM #removed o.date_stopped IS NULL
 SELECT 
     pi.identifier AS 'EMR ID',
@@ -22,6 +24,8 @@ FROM
         AND o.voided = 0
 GROUP BY o.patient_id
 ORDER BY pi.identifier ASC;
+
+
 #Both BDQ and DLM #removed o.date_stopped IS NULL and o1.date_stopped IS NULL
 SELECT 
     pi.identifier AS 'EMR ID',
