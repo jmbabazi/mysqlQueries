@@ -1,10 +1,10 @@
 SELECT 
     o1.encounter_id AS 'Encounter ID',
     o1.person_id AS 'ID',
-    o1.obs_id AS 'Parent Obs ID',
-    o2.obs_id AS 'Child Obs ID',
+    o1.obs_id AS 'Parent obs ID',
+    o2.obs_id AS 'Child obs ID',
     o2.obs_group_id AS 'Child Obs group ID',
-    DATE(o2.obs_datetime) AS 'Date of Sample collection',
+    DATE(o2.obs_datetime) AS 'Date of sample collection',
     (SELECT 
             name
         FROM
