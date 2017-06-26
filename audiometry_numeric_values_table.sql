@@ -1,7 +1,7 @@
 CREATE TABLE newResults (
     id VARCHAR(255),
     d_aud_test_done_new DATE,
-    t_asses_new INT(11),
+    t_asses_new VARCHAR(255),
     l_1000_new INT(11),
     l_2000_new INT(11),
     l_4000_new INT(11),
