@@ -223,7 +223,7 @@ FROM
 
 -- FINAL QUERY
 SELECT 
-    dates AS 'Month/Year',
+    dates AS 'Year/Month',
     bdq_monthly_enrollment AS 'New patients enrolled on Bdq/month',
     dlm_monthly_enrollment AS 'New patients enrolled on Dlm/month',
     conc_monthly_enrollment AS 'New patients enrolled on concomitant use/month',
