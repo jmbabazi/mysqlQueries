@@ -235,7 +235,7 @@ SELECT
 FROM
   finalResults;
 
--- After get your results, drop the tables. This is for refreshing and allowing new entered data to be included and counted in these queries 
+-- After getting your results, drop the tables. This is for refreshing and allowing new entered data to be included and counted in these queries 
  DROP TEMPORARY TABLE IF EXISTS cumulative_value; 
  DROP TEMPORARY TABLE IF EXISTS bdq_value; 
  DROP TEMPORARY TABLE IF EXISTS dlm_value; 
