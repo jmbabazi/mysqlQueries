@@ -33,8 +33,8 @@ FROM
         FROM
             concept_name
         WHERE
-            name LIKE '%Treatment start date%'
-                AND concept_name_type = 'SHORT'
+            name LIKE '%TUBERCULOSIS DRUG TREATMENT START DATE%'
+                AND concept_name_type = 'FULLY_SPECIFIED'
                 AND voided = 0
                 AND locale = 'en')
         AND o1.voided = 0
