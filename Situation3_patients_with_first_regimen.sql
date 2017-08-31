@@ -27,7 +27,7 @@ SELECT
                                 AND voided = 0
                                 AND locale = 'en')
                         AND orders.voided = 0
-                        AND auto_expire_date IS NULL
+                        AND orders.auto_expire_date IS NULL
                         AND orders.scheduled_date < (SELECT 
                             MIN(o2.scheduled_date)
                         FROM
@@ -55,7 +55,9 @@ SELECT
                                     UUID = '163144AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                                         AND voided = 0)
                                 AND o2.voided = 0
-                                AND o2.patient_id = orders.patient_id)),
+                                AND o2.patient_id = orders.patient_id)
+                        AND orders.auto_expire_date IS NULL
+                        AND orders.voided = 0),
             (SELECT 
                     name
                 FROM
