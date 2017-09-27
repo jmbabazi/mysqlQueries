@@ -6,22 +6,22 @@ SELECT
     cr.value_numeric AS Creatinine,
     glu.value_numeric AS Glucose,
     glu_fast.value_numeric AS 'Glucose fasting',
-    hba1c.value_numeric as HbA1c,
-    tsh.value_numeric as TSH,
-	serum.value_numeric AS SERUM,
-    ast.valu_numeric As AST,
-    alt.value_numeric as ALT,
+    hba1c.value_numeric AS HbA1c,
+    tsh.value_numeric AS TSH,
+    serum.value_numeric AS Serum,
+    ast.value_numeric AS AST,
+    alt.value_numeric AS ALT,
     total_bil.value_numeric AS 'Total Bilirubin',
-    mg.value_numeric as Magnesium,
-    ionized_cal.value_numeric as 'Inozed Calcium',
-    lip.value_numeric as Lipase
+    mg.value_numeric AS Magnesium,
+    ionized_cal.value_numeric AS 'Inozed Calcium',
+    lip.value_numeric AS Lipase
 FROM
     (SELECT DISTINCT
         (person_id), obs_datetime
     FROM
         obs
     WHERE
-        concept_id IN (1216 , 1217, 1643, 1644, 1220, 1198, 1250, 1222, 1223, 1249, 822, 1641, 828)
+        concept_id IN (1216 , 1217, 1643, 1644, 1220, 1221, 1198, 1250, 1222, 1223, 1249, 822, 1641, 828)
             AND voided = 0) person_id
         JOIN
     patient_identifier pi ON pi.patient_id = person_id.person_id
@@ -105,7 +105,7 @@ FROM
                     AND voided = 0)
             AND voided = 0) glu_fast ON person_id.person_id = glu_fast.person_id
         AND person_id.obs_datetime = glu_fast.obs_datetime
-  LEFT JOIN
+        LEFT JOIN
     (SELECT 
         person_id, obs_datetime, value_numeric
     FROM
@@ -137,14 +137,13 @@ FROM
                     AND voided = 0)
             AND voided = 0) tsh ON person_id.person_id = tsh.person_id
         AND person_id.obs_datetime = tsh.obs_datetime
---  
-  LEFT JOIN
+        LEFT JOIN
     (SELECT 
-        person_id, obs_datetime, value_text
+        person_id, obs_datetime, value_numeric
     FROM
         obs
     WHERE
-        concept_id = 1259
+        concept_id = 1250
             AND obs_group_id IN (SELECT 
                 obs_group_id
             FROM
@@ -152,7 +151,7 @@ FROM
             WHERE
                 concept_id = 1725 AND value_coded = 1
                     AND voided = 0)
-            AND voided = 0) serun ON person_id.person_id = serum.person_id
+            AND voided = 0) serum ON person_id.person_id = serum.person_id
         AND person_id.obs_datetime = serum.obs_datetime
         LEFT JOIN
     (SELECT 
@@ -232,7 +231,7 @@ FROM
             WHERE
                 concept_id = 1693 AND value_coded = 1
                     AND voided = 0)
-            AND voided = 0) mg ON person_id.person_id = ionized_cal.person_id
+            AND voided = 0) ionized_cal ON person_id.person_id = ionized_cal.person_id
         AND person_id.obs_datetime = ionized_cal.obs_datetime
         LEFT JOIN
     (SELECT 
@@ -250,58 +249,19 @@ FROM
                     AND voided = 0)
             AND voided = 0) lip ON person_id.person_id = lip.person_id
         AND person_id.obs_datetime = lip.obs_datetime
-      /*  LEFT JOIN
-    (SELECT 
-        person_id, obs_datetime, value_numeric
-    FROM
-        obs
-    WHERE
-        concept_id = 1220
-            AND obs_group_id IN (SELECT 
-                obs_group_id
-            FROM
-                obs
-            WHERE
-                concept_id = 1707 AND value_coded = 1
-                    AND voided = 0)
-            AND voided = 0) glu_fast ON person_id.person_id = glu_fast.person_id
-        AND person_id.obs_datetime = glu_fast.obs_datetime
-        LEFT JOIN
-    (SELECT 
-        person_id, obs_datetime, value_numeric
-    FROM
-        obs
-    WHERE
-        concept_id = 1220
-            AND obs_group_id IN (SELECT 
-                obs_group_id
-            FROM
-                obs
-            WHERE
-                concept_id = 1707 AND value_coded = 1
-                    AND voided = 0)
-            AND voided = 0) glu_fast ON person_id.person_id = glu_fast.person_id
-        AND person_id.obs_datetime = glu_fast.obs_datetime */
 WHERE
-    (      k.value_numeric IS NOT NULL
+    (k.value_numeric IS NOT NULL
         OR bun.value_numeric IS NOT NULL
         OR cr.value_numeric IS NOT NULL
         OR glu.value_numeric IS NOT NULL
         OR glu_fast.value_numeric IS NOT NULL
         OR hba1c.value_numeric IS NOT NULL
         OR tsh.value_numeric IS NOT NULL
-        -- OR amylase.value_numeric IS NOT NULL
         OR serum.value_numeric IS NOT NULL
         OR ast.value_numeric IS NOT NULL
         OR alt.value_numeric IS NOT NULL
         OR total_bil.value_numeric IS NOT NULL
         OR mg.value_numeric IS NOT NULL
         OR ionized_cal.value_numeric IS NOT NULL
-        OR lip.value_numeric IS NOT NULL
-        )
-ORDER BY pi.identifier , person_id.obs_datetime; 
-
-/*
-select count(distinct(person_id)), obs_datetime from obs 
- where concept_id IN (1216, 1217, 1643)
-group by obs_datetime;
+        OR lip.value_numeric IS NOT NULL)
+ORDER BY pi.identifier , person_id.obs_datetime;
